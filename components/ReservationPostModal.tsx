@@ -21,7 +21,7 @@ function ReservationPostModal(props: ReservationFormProps) {
     const { onClick } = props;
 
     const [field, setField] = useState<Field[]>([]);
-    const [noLap, setNoLap] = useState<string | null>("1");
+    const [noLap, setNoLap] = useState<string>("1");
     const [price, setPrice] = useState<number | null>(0);
     const [time, setTime] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
