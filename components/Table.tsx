@@ -47,7 +47,7 @@ const Table = <T extends Record<string, any>>(props: TableProps<T>) => {
           <tr>
             {columns.map((column) => (
               <th
-                key={column}
+                key={Object.keys(column)[0]}
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium uppercase"
               >
@@ -66,11 +66,11 @@ const Table = <T extends Record<string, any>>(props: TableProps<T>) => {
                   key={columnIndex}
                   className="px-6 py-4"
                 >
-                  {column.toLowerCase().includes('harga') || column.toLowerCase().includes('total_price') ? `Rp${formatNumberWithDot(row[column])}` : (
-                    column.toLowerCase() === 'payment_proof' && typeof row[column] === 'string' ? (
-                      <img src={JSON.parse(row[column]).url} alt="Lapangan" className="w-20 h-20 max-w-full" />
+                  {Object.keys(column)[0].toLowerCase().includes('harga') || Object.keys(column)[0].toLowerCase().includes('total_price') ? `Rp${formatNumberWithDot(row[Object.keys(column)[0]])}` : (
+                    Object.keys(column)[0].toLowerCase() === 'payment_proof' && typeof row[Object.keys(column)[0]] === 'string' ? (
+                      <img src={JSON.parse(row[Object.keys(column)[0]]).url} alt="Lapangan" className="w-20 h-20 max-w-full" />
                     ) : (
-                      row[column]
+                      row[Object.keys(column)[0]]
                     )
                   )}
                 </td>
