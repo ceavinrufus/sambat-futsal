@@ -7,7 +7,7 @@ import AuthRoute from '@/components/AuthRoute';
 const Reservation = () => {
     return (
         <>
-            <AuthRoute />
+            <AuthRoute role="customer" />
             <Navbar />
             <div className="mx-20 py-20">
                 <div className="h-screen pt-16 flex justify-center">
