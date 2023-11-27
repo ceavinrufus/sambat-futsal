@@ -59,6 +59,7 @@ const Navbar = (props: NavbarProps) => {
     const handleSelect = (option: string) => {
         if (option == "Logout") {
             handleLogout();
+            router.push("/login")
         } else if (option == "Profile") {
             router.push("/edit-profile")
         }

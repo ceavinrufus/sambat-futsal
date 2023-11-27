@@ -7,7 +7,6 @@ import AuthRoute from '@/components/AuthRoute';
 const Home = () => {
     return (
         <>
-            <AuthRoute role='customer' />
             <Navbar />
             <div className="mx-4 md:mx-12 lg:mx-20">
                 <Hero />
