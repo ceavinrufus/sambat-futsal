@@ -60,7 +60,7 @@ const Navbar = (props: NavbarProps) => {
         if (option == "Logout") {
             handleLogout();
         } else if (option == "Profile") {
-            router.push("edit-profile")
+            router.push("/edit-profile")
         }
     }
     const handleLogout = async () => {
@@ -87,14 +87,18 @@ const Navbar = (props: NavbarProps) => {
                         {authenticated && (
                             <div className="flex items-center">
                                 {role && role === 'field owner' ? (
-                                    <NavItem path="/financial-report" text="Laporan Keuangan" />
-                                ) : (
+                                    <NavItem path="/dashboard/field-owner/financial-report" text="Laporan Keuangan" />
+                                ) : role && role === "customer" ? (
                                     <>
                                         <NavItem path="/reservasi" text="Reservasi" />
-                                        {role === 'customer'}
                                         <NavItem path="/riwayat-pesanan" text="Riwayat Pesanan" />
                                     </>
-                                )}
+                                ) :
+                                    <>
+                                        <NavItem path="/dashboard/admin/kelola-lapangan" text="Kelola Lapangan" />
+                                        <NavItem path="/dashboard/admin/kelola-pesanan" text="Kelola Pesanan" />
+                                    </>
+                                }
                             </div>
                         )}
                         <div className="flex gap-2 items-center">

@@ -4,7 +4,6 @@ import { RiPencilFill, RiDeleteBinFill } from 'react-icons/ri';
 import formatNumberWithDot from '@/utils/formatNumber';
 
 interface TableProps<T> {
-  columns: String[];
   data: T[];
   ud?: boolean;
   handleUpdateClick?: (row: T) => void;
@@ -12,9 +11,10 @@ interface TableProps<T> {
 }
 
 const Table = <T extends Record<string, any>>(props: TableProps<T>) => {
-  const { columns, data, ud, handleUpdateClick, handleDeleteClick } = props;
+  const { data, ud, handleUpdateClick, handleDeleteClick } = props;
   const [currentPage, setCurrentPage] = useState(1);
 
+  const columns = Object.keys(data[0]);
   // Function to handle delete action
   const handleDelete = (row: T) => {
     if (handleDeleteClick) {
@@ -47,7 +47,7 @@ const Table = <T extends Record<string, any>>(props: TableProps<T>) => {
           <tr>
             {columns.map((column) => (
               <th
-                key={Object.keys(column)[0]}
+                key={column}
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium uppercase"
               >
@@ -66,11 +66,11 @@ const Table = <T extends Record<string, any>>(props: TableProps<T>) => {
                   key={columnIndex}
                   className="px-6 py-4"
                 >
-                  {Object.keys(column)[0].toLowerCase().includes('harga') || Object.keys(column)[0].toLowerCase().includes('total_price') ? `Rp${formatNumberWithDot(row[Object.keys(column)[0]])}` : (
-                    Object.keys(column)[0].toLowerCase() === 'payment_proof' && typeof row[Object.keys(column)[0]] === 'string' ? (
-                      <img src={JSON.parse(row[Object.keys(column)[0]]).url} alt="Lapangan" className="w-20 h-20 max-w-full" />
+                  {column.toLowerCase().includes('harga') || column.toLowerCase().includes('total_price') ? `Rp${formatNumberWithDot(row[column])}` : (
+                    column.toLowerCase() === 'payment_proof' && typeof row[column] === 'string' ? (
+                      <img src={JSON.parse(row[column]).url} alt="Lapangan" className="w-20 h-20 max-w-full" />
                     ) : (
-                      row[Object.keys(column)[0]]
+                      row[column]
                     )
                   )}
                 </td>

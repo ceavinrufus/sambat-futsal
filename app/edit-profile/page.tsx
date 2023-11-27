@@ -2,10 +2,12 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProfileForm from '@/components/ProfileForm';
+import AuthRoute from '@/components/AuthRoute';
 
 const EditProfile = () => {
     return (
         <>
+            <AuthRoute />
             <Navbar />
             <div className="flex justify-end flex-col">
                 <div className="flex flex-row h-screen">

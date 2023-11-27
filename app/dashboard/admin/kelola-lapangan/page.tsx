@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import AdminSidebar from '../../components/AdminSidebar';
+import AdminSidebar from '../../../../components/AdminSidebar';
 import Table from '@/components/Table';
 import FieldModal from '@/components/FieldModal';
 import FieldPostModal from '@/components/FieldPostModal';
@@ -96,7 +96,7 @@ const KelolaLapangan: React.FC = () => {
           </div>
           {filteredData?.length > 0 && (
             <Table
-              columns={Object.keys(filteredData[0])}
+              // columns={Object.keys(filteredData[0])}
               data={filteredData}
               ud={true}
               handleUpdateClick={handleUpdateClick}

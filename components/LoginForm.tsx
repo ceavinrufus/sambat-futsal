@@ -15,7 +15,7 @@ function LoginForm() {
 
     const handleLogin = async () => {
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
@@ -23,7 +23,19 @@ function LoginForm() {
                 throw error;
             }
             alert("Sukses login!")
-            router.push("/")
+            const { data: { user } } = await supabase.auth.getUser()
+            const { data } = await supabase
+                .from("profiles")
+                .select("role")
+                .eq("id", user?.id)
+            if (data) {
+                if (data[0].role == "admin") {
+                    console.log(data)
+                    router.push("/dashboard/admin")
+                } else if (data[0].role == "field owner") {
+                    router.push("/dashboard/field-owner")
+                }
+            }
         } catch (error: any) {
             console.error('Error signing in:', error.message);
         }
@@ -37,12 +49,12 @@ function LoginForm() {
                 <TextField placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 {/* Password */}
                 <label className="block text-white text-sm font-bold">Password</label>
-                <TextField 
-                    placeholder='Password' 
+                <TextField
+                    placeholder='Password'
                     type={`${showPass ? "text" : 'password'}`}
-                    value={password} 
+                    value={password}
                     rightIcon={showPass ? <GoEyeClosed /> : <GoEye />}
-                    onChange={(e) => setPassword(e.target.value)} 
+                    onChange={(e) => setPassword(e.target.value)}
                     onRightIconClick={() => setShowPass(!showPass)}
                 />
             </div>

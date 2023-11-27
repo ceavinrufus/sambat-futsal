@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import AdminSidebar from '../../components/AdminSidebar';
+import AdminSidebar from '../../../../components/AdminSidebar';
 import SearchBar from '@/components/Searchbar';
 import DashboardModal from '@/components/ReservationModal';
 import { supabase } from '@/config/supabaseClient';
@@ -108,7 +108,7 @@ const KelolaPesanan: React.FC = () => {
           </div>
           {filteredData?.length > 0 && (
             <Table
-              columns={Object.keys(filteredData[0])}
+              // columns={Object.keys(filteredData[0])}
               data={filteredData}
               ud={true}
               handleUpdateClick={handleUpdateClick}

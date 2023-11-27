@@ -4,7 +4,7 @@ import { supabase } from '@/config/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 interface AuthProps {
-    role: string;
+    role?: string;
 }
 function AuthRoute(props: AuthProps) {
     const { role } = props;
@@ -17,7 +17,7 @@ function AuthRoute(props: AuthProps) {
 
             console.log(data)
             if (data.session == null) {
-                router.push("login");
+                router.push("/login");
             } else {
                 const { data: { user } } = await supabase.auth.getUser()
 
@@ -26,9 +26,14 @@ function AuthRoute(props: AuthProps) {
                         .from("profiles")
                         .select("*")
                         .eq("id", user?.id)
-                    if (data) {
+                    if (data && role) {
                         if (data[0].role !== role) {
-                            router.push("/login")
+                            if (data[0].role == "admin")
+                                router.push("/dashboard/admin")
+                            if (data[0].role == "field owner")
+                                router.push("/dashboard/field-owner")
+                            if (data[0].role == "customer")
+                                router.push("/")
                         }
                     }
                 }

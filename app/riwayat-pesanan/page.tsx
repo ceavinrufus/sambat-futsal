@@ -6,6 +6,7 @@ import SearchBar from '@/components/Searchbar';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { supabase } from '@/config/supabaseClient';
+import AuthRoute from '@/components/AuthRoute';
 
 interface Order {
   reservation_id: number;
@@ -100,6 +101,7 @@ const KelolaPesanan: React.FC = () => {
 
   return (
     <>
+      <AuthRoute role='customer' />
       <Navbar />
       <div className="flex justify-center">
         <div className="flex flex-col p-8 ml-12 mt-20 gap-4 w-4/5">
@@ -109,7 +111,7 @@ const KelolaPesanan: React.FC = () => {
           <div className="flex flex-col">
             {filteredData.length > 0 && (
               <Table
-                columns={Object.keys(filteredData[0])}
+                // columns={Object.keys(filteredData[0])}
                 key={currentPage}
                 data={filteredData}
                 ud={false}

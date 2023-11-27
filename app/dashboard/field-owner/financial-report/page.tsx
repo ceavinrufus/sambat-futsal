@@ -7,8 +7,9 @@ import Dropdown from '@/components/Dropdown';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Loading from '@/components/Loading';
-import { supabase } from '../../config/supabaseClient';
+import { supabase } from '../../../../config/supabaseClient';
 import AuthRoute from '@/components/AuthRoute';
+import OwnerSidebar from '@/components/OwnerSidebar';
 
 const FinancialReport = () => {
 
@@ -144,10 +145,10 @@ const FinancialReport = () => {
             {loading ? (
                 <Loading />
             ) : (
-                <div>
-                    <Navbar />
-                    <div className="flex h-screen">
+                <div className="flex w-full">
+                    <OwnerSidebar />
 
+                    <div className="flex h-screen w-full">
                         <div className="items-center flex-grow flex flex-col ml-4 relative mt-20">
                             <div className="w-4/6">
                                 <p className="text-2xl justify-start text-black font-bold mt-3">Laporan Keuangan</p>
@@ -243,7 +244,6 @@ const FinancialReport = () => {
                         </div>
 
                     </div>
-                    <Footer />
                 </div>
             )}
         </>
