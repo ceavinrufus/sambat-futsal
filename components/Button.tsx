@@ -12,7 +12,7 @@ const Button = (props: ButtonProps) => {
     const { variant = 'primary', onClick, leftIcon, rightIcon, children, ...rest } = props;
     // const { variant = 'secondary', onClick, children } = props;
 
-    let buttonClasses = 'lg:px-4 lg:py-2 px-2 py-1 rounded flex items-center justify-between';
+    let buttonClasses = 'lg:px-4 lg:py-2 px-2 py-1 rounded flex items-center justify-between disabled:bg-gray-600 disabled:text-white disabled:cursor-not-allowed';
 
     if (variant === 'primary') {
         buttonClasses += ' bg-primary text-white hover:bg-primary-2';

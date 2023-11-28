@@ -8,7 +8,6 @@ import { GoChevronLeft } from "react-icons/go";
 import NumericStepper from './NumericStepper'
 import Button from './Button'
 import { supabase } from '@/config/supabaseClient'
-import type { Field } from "@/types/Field"
 import formatNumberWithDot from '@/utils/formatNumber'
 import generateRandomCode from '@/utils/generateRandomCode'
 import { v4 as uuidv4 } from 'uuid';
@@ -20,13 +19,14 @@ interface ReservationFormProps {
 function ReservationPostModal(props: ReservationFormProps) {
     const { onClick } = props;
 
-    const [field, setField] = useState<Field[]>([]);
+    const [maxDur, setMaxDur] = useState<number>(6);
     const [noLap, setNoLap] = useState<string>("1");
     const [price, setPrice] = useState<number | null>(0);
     const [time, setTime] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
     const [duration, setDuration] = useState(1);
     const [file, setFile] = useState<File | null>(null);
+    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     const handleDurationChange = (value: number) => {
         setDuration(value);
@@ -37,6 +37,25 @@ function ReservationPostModal(props: ReservationFormProps) {
             setFile(file)
         }
     };
+
+    useEffect(() => {
+        setDuration(1)
+        if (time) {
+            if (time == "23:00") {
+                setMaxDur(1)
+            } else if (time == "22:00") {
+                setMaxDur(2)
+            } else if (time == "21:00") {
+                setMaxDur(3)
+            } else if (time == "20:00") {
+                setMaxDur(4)
+            } else if (time == "19:00") {
+                setMaxDur(5)
+            } else {
+                setMaxDur(6)
+            }
+        }
+    }, [time])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,62 +69,66 @@ function ReservationPostModal(props: ReservationFormProps) {
                 throw error;
             }
 
-            if (data && selectedDate) {
+            if (data && selectedDate && time) {
+                setButtonDisabled(false)
                 const day = selectedDate.getDay()
                 if (day == 0 || day == 6)
                     setPrice(data[0].harga_weekend * duration);
                 else
                     setPrice(data[0].harga_weekday * duration);
+            } else {
+                setButtonDisabled(true)
             }
         }
         fetchData()
-    }, [selectedDate, duration, noLap])
+    }, [selectedDate, duration, noLap, time])
 
 
     const handleSubmit = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
+        if (!buttonDisabled) {
+            const { data: { user } } = await supabase.auth.getUser()
+            try {
+                const uniquePath = user?.id + '/' + Date.now() + "_" + uuidv4();
 
-        try {
-            const uniquePath = user?.id + '/' + Date.now() + "_" + uuidv4();
+                const { data: imgData, error: imgErr } = await supabase.storage
+                    .from('payment_proof')
+                    .upload(uniquePath, file!, {
+                        contentType: "image/*"
+                    });
+                if (imgErr) {
+                    console.error('Error uploading file:', imgErr);
+                    return;
+                }
 
-            const { data: imgData, error: imgErr } = await supabase.storage
-                .from('payment_proof')
-                .upload(uniquePath, file!, {
-                    contentType: "image/*"
-                });
-            if (imgErr) {
-                console.error('Error uploading file:', imgErr);
-                return;
-            }
-
-            const { data, error } = await supabase
-                .from('reservations')
-                .insert(
-                    {
-                        reservation_id: uuidv4(),
-                        reserver_id: user?.id,
-                        date: selectedDate,
-                        no_lapangan: noLap,
-                        total_price: price,
-                        booking_code: generateRandomCode(10),
-                        payment_proof: {
-                            path: imgData.path,
-                            url: process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/payment_proof/" + imgData.path
+                const { data, error } = await supabase
+                    .from('reservations')
+                    .insert(
+                        {
+                            reservation_id: uuidv4(),
+                            reserver_id: user?.id,
+                            date: selectedDate,
+                            no_lapangan: noLap,
+                            total_price: price,
+                            booking_code: generateRandomCode(10),
+                            payment_proof: {
+                                path: imgData.path,
+                                url: process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/payment_proof/" + imgData.path
+                            },
+                            time: time,
+                            duration: duration,
+                            payment_date: new Date(),
                         },
-                        time: time,
-                        duration: duration,
-                        payment_date: new Date(),
-                    },
-                );
+                    );
 
-            if (error) {
-                console.error('Error inserting data:', error);
-            } else {
-                alert('Data inserted successfully!');
+                if (error) {
+                    console.error('Error inserting data:', error);
+                } else {
+                    alert('Data inserted successfully!');
+                }
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
             }
-
-        } catch (error) {
-            console.error('Error submitting form:', error);
         }
     };
 
@@ -126,16 +149,18 @@ function ReservationPostModal(props: ReservationFormProps) {
                         </div>
                         <div className="w-2/5">
                             <h3>Tanggal</h3>
-                            <CustomDatePicker selectedDate={selectedDate} onChange={setSelectedDate} />
+                            <CustomDatePicker selectedDate={selectedDate} onChange={setSelectedDate} minDate={new Date()} />
                         </div>
                         <div className="w-1/3">
                             <h3>Waktu Mulai</h3>
-                            <CustomTimePicker value={time} onChange={setTime} variant='outline' />
+                            <div className="flex items-center gap-2">
+                                <CustomTimePicker value={time} onChange={setTime} variant='outline' /> WIB
+                            </div>
                         </div>
                         <div className="w-2/5">
                             <h3>Durasi</h3>
                             <div className="flex items-center gap-2">
-                                <NumericStepper value={duration} minValue={1} maxValue={6} onChange={handleDurationChange} />
+                                <NumericStepper value={duration} minValue={1} maxValue={maxDur} onChange={handleDurationChange} />
                                 jam
                             </div>
                         </div>
@@ -150,7 +175,7 @@ function ReservationPostModal(props: ReservationFormProps) {
                         <p>Total harga:</p>
                         <p className='text-secondary'>Rp{price && formatNumberWithDot(price)}</p>
                     </div>
-                    <Button onClick={handleSubmit} variant='secondary'>Submit</Button>
+                    <Button disabled={buttonDisabled} onClick={handleSubmit} variant='secondary'>Submit</Button>
                 </div>
             </div>
         </Sidebar>

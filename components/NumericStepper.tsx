@@ -19,7 +19,12 @@ const NumericStepper = (props: NumericStepperProps) => {
                 min={minValue}
                 max={maxValue}
                 step={step}
-                onChange={(e) => onChange(Number(e.target.value))}
+                onChange={(e) => {
+                    if (Number(e.target.value) >= 0 && Number(e.target.value) <= maxValue)
+                        onChange(Number(e.target.value));
+                    else
+                        onChange(minValue)
+                }}
                 className="px-2 py-1 text-center border-t border-b w-20 text-black rounded"
             />
         </div>

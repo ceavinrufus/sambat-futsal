@@ -23,6 +23,24 @@ const CustomTimePicker = (props: TimePickerProps) => {
         timePickerClasses += ' bg-white text-black';
     }
 
+    const handleTimeChange = (time: string | null) => {
+        // Ensure that the time chosen is on the hour
+        if (time !== null) {
+            const selectedTime = new Date(`01/01/2000 ${time}`);
+            const minutes = selectedTime.getMinutes();
+
+            if (minutes !== 0) {
+                // Adjust the time to the nearest hour
+                selectedTime.setMinutes(0);
+                onChange(selectedTime.toTimeString().slice(0, 5)); // Only HH:mm part
+            } else {
+                onChange(time); // No adjustment needed if already on the hour
+            }
+        } else {
+            onChange(null);
+        }
+    };
+
     return (
         <div className="w-32">
             <div className={timePickerClasses}>
@@ -30,8 +48,8 @@ const CustomTimePicker = (props: TimePickerProps) => {
                     clearIcon={value != null ? < FiX /> : null}
                     disableClock={true}
                     format="HH:mm"
-                    onChange={(time: string | null) => onChange(time)}
-                    value={value || '00:00'} // If null, display a default time
+                    onChange={(time: string | null) => handleTimeChange(time)}
+                    value={value} // If null, display a default time
                     clockIcon={null}
                     onInvalidChange={() => alert('Invalid time')}
                 />

@@ -50,7 +50,7 @@ function ScheduleTable(props: ScheduleTableProps) {
                         <th
                             key={column}
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium uppercase"
+                            className="px-6 py-3 text-center text-xs font-medium uppercase"
                         >
                             {column}
                         </th>
@@ -60,8 +60,8 @@ function ScheduleTable(props: ScheduleTableProps) {
             <tbody className="divide-y divide-gray-200">
                 {hoursArray.slice(startHour, endHour).map((data, id) => (
                     <tr key={id}>
-                        <td className='text-center'>{data.slice(0, 5)}</td>
-                        <td className='text-center'>{checkAvailable(fetchData, data) ? <span className='text-[#2cc956]'>Yes</span> : <span className='text-[#c9392c]'>No</span>}</td>
+                        <td className='text-center py-3 px-6'>{data.slice(0, 5)} WIB</td>
+                        <td className='text-center py-3 px-6'>{checkAvailable(fetchData, data) ? <span className='text-[#2cc956]'>Yes</span> : <span className='text-[#c9392c]'>No</span>}</td>
                     </tr>
                 ))}
             </tbody>

@@ -8,10 +8,11 @@ import { GoCalendar } from 'react-icons/go';
 interface DatePickerProps {
     selectedDate: Date | null;
     onChange: (date: Date | null) => void;
+    minDate?: Date | null;
 }
 
 const CustomDatePicker = (props: DatePickerProps) => {
-    const { selectedDate, onChange, ...rest } = props
+    const { selectedDate, onChange, minDate, ...rest } = props
 
     // eslint-disable-next-line react/display-name
 
@@ -39,6 +40,7 @@ const CustomDatePicker = (props: DatePickerProps) => {
                         dateFormat="dd/MM/yyyy"
                         showDisabledMonthNavigation
                         inline
+                        minDate={minDate}
                         {...rest}
                     />
                 </div>
