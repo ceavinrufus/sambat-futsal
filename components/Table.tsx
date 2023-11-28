@@ -66,13 +66,16 @@ const Table = <T extends Record<string, any>>(props: TableProps<T>) => {
                   key={columnIndex}
                   className="px-6 py-4"
                 >
-                  {column.toLowerCase().includes('harga') || column.toLowerCase().includes('total_price') ? `Rp${formatNumberWithDot(row[column])}` : (
-                    column.toLowerCase() === 'payment_proof' && typeof row[column] === 'string' ? (
-                      <img src={JSON.parse(row[column]).url} alt="Lapangan" className="w-20 h-20 max-w-full" />
-                    ) : (
-                      row[column]
-                    )
-                  )}
+                  {column.toLowerCase().includes('harga') || column.toLowerCase().includes('total_price')
+                    ? `Rp${formatNumberWithDot(row[column])}`
+                    : (column.toLowerCase() === 'payment_proof' && typeof row[column] === 'string'
+                      ? ((JSON.parse(row[column]).url)
+                        ? <img src={JSON.parse(row[column]).url} alt="Lapangan" className="w-20 h-20 max-w-full" />
+                        : <span >-</span>)
+                      : (
+                        row[column]
+                      )
+                    )}
                 </td>
               ))}
               {ud && (

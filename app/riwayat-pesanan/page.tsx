@@ -103,7 +103,7 @@ const KelolaPesanan: React.FC = () => {
     <>
       <AuthRoute role='customer' />
       <Navbar />
-      <div className="flex justify-center">
+      <div className="flex justify-center min-h-screen">
         <div className="flex flex-col p-8 ml-12 mt-20 gap-4 w-4/5">
           <h1 className="font-bold text-2xl">Riwayat Pesanan</h1>
           <SearchBar onSearch={handleSearch} />

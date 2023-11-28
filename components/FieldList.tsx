@@ -73,7 +73,7 @@ const FieldList = () => {
                         <div className="max-h-full overflow-y-auto space-y-6">
                             {fields.map(field => (
                                 // Card
-                                <div key={field.id} className="border border-primary rounded-xl shadow-md p-4 flex items-center justify-between">
+                                <div key={field.id} className="border border-primary rounded-xl shadow-md p-4 flex items-center justify-between" data-aos="fade-up">
                                     <div className="flex gap-4">
                                         <div className="h-40 w-40">
                                             {field.type === "lantai atletik poliuretan" ? <img src={"/poliuretan.jpg"} className='rounded-xl' /> : field.type === "lantai rumput sintetis" ? <img src={"/rumput.jpg"} className='rounded-xl' /> : <img src={"/semen.jpg"} className='rounded-xl' />}

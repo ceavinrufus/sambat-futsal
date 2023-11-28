@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* <AOSInit /> */}
+      <AOSInit />
       <body className={`w-screen ${poppins.className}`}>
         {children}
       </body>

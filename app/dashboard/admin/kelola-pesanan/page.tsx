@@ -85,10 +85,6 @@ const KelolaPesanan: React.FC = () => {
     setIsPostModalOpen(true);
   };
 
-  const closePostModal = () => {
-    setIsPostModalOpen(false);
-  };
-
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedRow(null)
