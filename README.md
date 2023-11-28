@@ -21,7 +21,7 @@ Untuk menjalankan webapp berbasis, buka directory project lalu buka terminal, ke
 
 ### 1. UC1 - Landing Page
 - **NIM:** 18221146
-- **Nama:** Tara Chandani Haryono
+- **Nama:** Ceavin Rufus
 - Halaman awal sistem reservasi lapangan futsal menampilkan informasi tentang sistem, lapangan futsal yang tersedia, dan opsi login atau registrasi.
 
 ![](doc/landing-page.png)
