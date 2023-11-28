@@ -20,8 +20,8 @@ Untuk menjalankan webapp berbasis, buka directory project lalu buka terminal, ke
 ## Daftar Use Case
 
 ### 1. UC1 - Landing Page
-- **NIM:** 18221146
-- **Nama:** Tara Chandani Haryono
+- **NIM:** 18221162
+- **Nama:** Ceavin Rufus De Prayer Purba
 - Halaman awal sistem reservasi lapangan futsal menampilkan informasi tentang sistem, lapangan futsal yang tersedia, dan opsi login atau registrasi.
 
 ![](doc/landing-page.png)
