@@ -5,7 +5,7 @@ describe('generateRandomCode', () => {
     const length = 8;
     const result = generateRandomCode(length);
     expect(result).toHaveLength(length);
-    expect(result).toMatch(/^[a-zA-Z0-9]+$/); // Check if the result contains only alphanumeric characters
+    expect(result).toMatch(/^[a-zA-Z0-9]+$/);
   });
 
   it('should generate a different code on each call', () => {

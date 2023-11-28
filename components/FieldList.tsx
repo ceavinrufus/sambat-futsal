@@ -9,7 +9,7 @@ import { GoFilter, GoSortAsc, GoSortDesc } from "react-icons/go";
 import Dropdown from './Dropdown';
 import ScheduleModal from './ScheduleModal';
 
-const Reservation = () => {
+const FieldList = () => {
     const [ascending, setAscending] = useState<boolean>(true)
     const [fetchError, setFetchError] = useState<string | null>()
     const [fields, setFields] = useState<Field[] | null>(null)
@@ -114,5 +114,5 @@ const Reservation = () => {
     );
 };
 
-export default Reservation;
+export default FieldList;
 
