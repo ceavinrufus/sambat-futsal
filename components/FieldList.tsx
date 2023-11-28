@@ -7,6 +7,7 @@ import formatNumberWithDot from '@/utils/formatNumber';
 import type { Field } from "@/types/Field"
 import { GoFilter, GoSortAsc, GoSortDesc } from "react-icons/go";
 import Dropdown from './Dropdown';
+import ScheduleModal from './ScheduleModal';
 
 const Reservation = () => {
     const [ascending, setAscending] = useState<boolean>(true)
@@ -15,6 +16,7 @@ const Reservation = () => {
     const [field, setField] = useState<Field | null>(null)
     const [type, setType] = useState<string | null>(null)
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchFields = async () => {
@@ -82,8 +84,9 @@ const Reservation = () => {
                                                 <p className=''>Harga Weekday: Rp{formatNumberWithDot(field.harga_weekday)}</p>
                                                 <p className=''>Harga Weekend: Rp{formatNumberWithDot(field.harga_weekend)}</p>
                                             </div>
-                                            <div >
+                                            <div className='flex gap-2'>
                                                 <Button onClick={() => { setIsOpen(true); setField(field) }}>Pesan</Button>
+                                                <Button variant='secondary' onClick={() => { setIsModalOpen(true); setField(field) }}>Lihat Jadwal</Button>
                                             </div>
                                         </div>
                                     </div>
@@ -103,6 +106,10 @@ const Reservation = () => {
             <div className={`${isOpen ? "" : "translate-x-[500px]"} duration-200 transition z-50 top-0 right-0 fixed`}>
                 <ReservationForm field={field} onClick={() => setIsOpen(false)} />
             </div>
+
+            {isModalOpen && field &&
+                <ScheduleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} field={field} />
+            }
         </>
     );
 };

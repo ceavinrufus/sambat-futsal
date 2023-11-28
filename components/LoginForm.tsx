@@ -30,10 +30,11 @@ function LoginForm() {
                 .eq("id", user?.id)
             if (data) {
                 if (data[0].role == "admin") {
-                    console.log(data)
                     router.push("/dashboard/admin")
                 } else if (data[0].role == "field owner") {
                     router.push("/dashboard/field-owner")
+                } else if (data[0].role == "customer") {
+                    router.push("/")
                 }
             }
         } catch (error: any) {
