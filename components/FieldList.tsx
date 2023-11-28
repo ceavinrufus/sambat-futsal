@@ -20,7 +20,21 @@ const Reservation = () => {
 
     useEffect(() => {
         const fetchFields = async () => {
-            if (type) {
+            if (type == null || type == "Semua Jenis") {
+                const { data, error } = await supabase
+                    .from('fields')
+                    .select('*')
+                    .order("no_lapangan", { ascending })
+                if (error) {
+                    setFetchError('Could not fetch the fields!');
+                    setFields(null)
+                    console.log(error)
+                }
+                if (data) {
+                    setFields(data)
+                    setFetchError(null)
+                }
+            } else if (type) {
                 const { data, error } = await supabase
                     .from('fields')
                     .select('*')
@@ -36,20 +50,6 @@ const Reservation = () => {
                     setFields(data)
                     setFetchError(null)
                 }
-            } else {
-                const { data, error } = await supabase
-                    .from('fields')
-                    .select('*')
-                    .order("no_lapangan", { ascending })
-                if (error) {
-                    setFetchError('Could not fetch the fields!');
-                    setFields(null)
-                    console.log(error)
-                }
-                if (data) {
-                    setFields(data)
-                    setFetchError(null)
-                }
             }
         }
 
@@ -60,8 +60,8 @@ const Reservation = () => {
         <>
             <div className="flex gap-2 justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
-                    <label>Filter:</label>
-                    <Dropdown variant="primary-outline" onSelect={(selected) => { setType(selected) }} options={["Lantai Atletik Poliuretan", "Lantai Rumput Sintetis", "Lantai Semen"]} placeholder="Tipe Lapangan" />
+                    <label>Tipe Lapangan:</label>
+                    <Dropdown variant="primary-outline" onSelect={(selected) => { setType(selected) }} options={["Semua Jenis", "Lantai Atletik Poliuretan", "Lantai Rumput Sintetis", "Lantai Semen"]} placeholder="Semua Jenis" />
                 </div>
                 <Button variant='primary-outline' rightIcon={ascending ? <GoSortAsc size={32} /> : <GoSortDesc size={32} />} onClick={() => setAscending(!ascending)}>
                     Nomor Lapangan

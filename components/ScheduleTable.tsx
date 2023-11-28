@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { supabase } from '@/config/supabaseClient';
 import { FieldSchedule } from '@/types/FieldSchedule';
 import { Field } from '@/types/Field';
+import { checkAvailable } from '@/utils/checkAvailable';
 
 interface ScheduleTableProps {
     selectedDate: Date | null;
@@ -40,18 +41,7 @@ function ScheduleTable(props: ScheduleTableProps) {
         }
     }, [selectedDate])
 
-    const checkAvailable = (schedules: FieldSchedule[], time: string) => {
-        if (selectedDate) {
-            const filterTime = schedules.find(
-                (schedule) => schedule.time === time
-            );
-            if (filterTime) {
-                return filterTime.available;
-            } else {
-                return true;
-            }
-        }
-    }
+
     return (
         <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-primary text-white">
