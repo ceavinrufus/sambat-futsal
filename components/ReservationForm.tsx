@@ -110,9 +110,9 @@ function ReservationForm(props: ReservationFormProps) {
                     );
 
                 if (error) {
-                    console.error('Error inserting data:', error);
+                    alert('Reservasi gagal!');
                 } else {
-                    alert('Data inserted successfully!');
+                    alert('Reservasi sukses!');
                 }
 
             } catch (error) {

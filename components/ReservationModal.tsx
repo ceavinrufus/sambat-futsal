@@ -37,15 +37,15 @@ const ReservationModal: React.FC<ModalProps> = ({
   useEffect(() => {
     setDuration(1)
     if (time) {
-      if (time == "23:00") {
+      if (time == "23:00:00" || time == "23:00") {
         setMaxDur(1)
-      } else if (time == "22:00") {
+      } else if (time == "22:00:00" || time == "22:00") {
         setMaxDur(2)
-      } else if (time == "21:00") {
+      } else if (time == "21:00:00" || time == "21:00") {
         setMaxDur(3)
-      } else if (time == "20:00") {
+      } else if (time == "20:00:00" || time == "20:00") {
         setMaxDur(4)
-      } else if (time == "19:00") {
+      } else if (time == "19:00:00" || time == "19:00") {
         setMaxDur(5)
       } else {
         setMaxDur(6)

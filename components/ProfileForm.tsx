@@ -54,14 +54,14 @@ const ProfileForm = () => {
                     // Check if avatar is present and contains valid JSON
                     if (data[0]?.birthdate) {
                         try {
-                            
+
                             setBirthdate(new Date(Date.parse(data[0].birthdate)))
                         } catch (error) {
                             console.error('Error parsing avatar JSON:', error);
                             // Handle the error as needed (e.g., set a default avatar)
                         }
                     }
-                    
+
                     // Check if avatar is present and contains valid JSON
                     if (data[0]?.avatar) {
                         try {
@@ -120,9 +120,9 @@ const ProfileForm = () => {
 
             if (error) {
                 console.error('Error updating data:', error.message);
-                alert('Failed!');
+                alert('Gagal mengubah profil!');
             } else {
-                alert('Data updated successfully!');
+                alert('Sukses mengubah profil!');
             }
         }
     }

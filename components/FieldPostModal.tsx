@@ -8,13 +8,11 @@ import CustomDatePicker from './DatePicker'
 import CustomTimePicker from './TimePicker'
 import NumericStepper from './NumericStepper'
 import formatNumberWithDot from '@/utils/formatNumber';
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
-  initialData?: any;
 }
 
 const FieldPostModal: React.FC<ModalProps> = ({
@@ -48,11 +46,12 @@ const FieldPostModal: React.FC<ModalProps> = ({
         console.error('Supabase error:', error.message, error.details);
         throw error;
       }
+      alert("Sukses menambah lapangan!")
 
       // Close the modal after submission
       onClose();
     } catch (error) {
-      console.error('Error updating data in Supabase:', (error as Error).message);
+      alert("Gagal menambah lapangan!")
     }
   };
 
@@ -75,7 +74,7 @@ const FieldPostModal: React.FC<ModalProps> = ({
       }}
     >
       <div className='w-full justify-center items-start flex flex-col text-white'>
-        <h2>Tambah Pesanan</h2>
+        <h2>Tambah Lapangan</h2>
         <form className='w-full'>
           <div className="mt-10 flex flex-col gap-4">
             <div className="w-2/5">

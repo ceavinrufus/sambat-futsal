@@ -39,6 +39,7 @@ function LoginForm() {
             }
         } catch (error: any) {
             console.error('Error signing in:', error.message);
+            alert("Gagal login!")
         }
     };
 

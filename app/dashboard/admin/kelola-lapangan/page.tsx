@@ -63,6 +63,7 @@ const KelolaLapangan: React.FC = () => {
       if (data) {
         const updatedData = data.filter((item) => item.id !== row.id);
         setData(updatedData);
+        fetchData()
       }
       console.log(`Successfully deleted data on Supabase for reservation ID: ${row.id}`);
     } catch (error) {
@@ -119,7 +120,6 @@ const KelolaLapangan: React.FC = () => {
       <FieldPostModal
         isOpen={isPostModalOpen}
         onClose={closePostModal}
-        title="Edit Lapangan"
       />
       {/* } */}
       {/* 

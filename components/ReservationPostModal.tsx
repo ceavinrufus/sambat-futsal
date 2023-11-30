@@ -3,7 +3,6 @@ import Sidebar from './Sidebar'
 import TextField from './TextField'
 import CustomDatePicker from './DatePicker'
 import CustomTimePicker from './TimePicker'
-import FileUpload from './FileUpload'
 import { GoChevronLeft } from "react-icons/go";
 import NumericStepper from './NumericStepper'
 import Button from './Button'
@@ -11,13 +10,15 @@ import { supabase } from '@/config/supabaseClient'
 import formatNumberWithDot from '@/utils/formatNumber'
 import generateRandomCode from '@/utils/generateRandomCode'
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation'
 
 interface ReservationFormProps {
     onClick: () => void;
+    setTrigger: () => void;
 }
 
 function ReservationPostModal(props: ReservationFormProps) {
-    const { onClick } = props;
+    const { onClick, setTrigger } = props;
 
     const [maxDur, setMaxDur] = useState<number>(6);
     const [noLap, setNoLap] = useState<string>("1");
@@ -27,15 +28,9 @@ function ReservationPostModal(props: ReservationFormProps) {
     const [duration, setDuration] = useState(1);
     const [file, setFile] = useState<File | null>(null);
     const [buttonDisabled, setButtonDisabled] = useState(true);
-
+    const router = useRouter()
     const handleDurationChange = (value: number) => {
         setDuration(value);
-    };
-
-    const handleFileSelect = (file: File | null) => {
-        if (file) {
-            setFile(file)
-        }
     };
 
     useEffect(() => {
@@ -57,29 +52,30 @@ function ReservationPostModal(props: ReservationFormProps) {
         }
     }, [time])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const { data, error } = await supabase
-                .from('fields')
-                .select('*')
-                .eq("no_lapangan", noLap);
+    const fetchData = async () => {
+        const { data, error } = await supabase
+            .from('fields')
+            .select('*')
+            .eq("no_lapangan", noLap);
 
-            if (error) {
-                console.error('Supabase error:', error.message, error.details);
-                throw error;
-            }
-
-            if (data && selectedDate && time) {
-                setButtonDisabled(false)
-                const day = selectedDate.getDay()
-                if (day == 0 || day == 6)
-                    setPrice(data[0].harga_weekend * duration);
-                else
-                    setPrice(data[0].harga_weekday * duration);
-            } else {
-                setButtonDisabled(true)
-            }
+        if (error) {
+            console.error('Supabase error:', error.message, error.details);
+            throw error;
         }
+
+        if (data && selectedDate && time) {
+            setButtonDisabled(false)
+            const day = selectedDate.getDay()
+            if (day == 0 || day == 6)
+                setPrice(data[0].harga_weekend * duration);
+            else
+                setPrice(data[0].harga_weekday * duration);
+        } else {
+            setButtonDisabled(true)
+        }
+    }
+
+    useEffect(() => {
         fetchData()
     }, [selectedDate, duration, noLap, time])
 
@@ -111,8 +107,8 @@ function ReservationPostModal(props: ReservationFormProps) {
                             total_price: price,
                             booking_code: generateRandomCode(10),
                             payment_proof: {
-                                path: file ? imgData.path : null,
-                                url: file ? process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/payment_proof/" + imgData.path : null
+                                path: null,
+                                url: null
                             },
                             time: time,
                             duration: duration,
@@ -121,9 +117,10 @@ function ReservationPostModal(props: ReservationFormProps) {
                     );
 
                 if (error) {
-                    console.error('Error inserting data:', error);
+                    alert('Reservasi gagal!');
                 } else {
-                    alert('Data inserted successfully!');
+                    alert('Reservasi sukses!');
+                    setTrigger()
                 }
 
             } catch (error) {
@@ -163,10 +160,6 @@ function ReservationPostModal(props: ReservationFormProps) {
                                 <NumericStepper value={duration} minValue={1} maxValue={maxDur} onChange={handleDurationChange} />
                                 jam
                             </div>
-                        </div>
-                        <div className="">
-                            <h3>Bukti Pembayaran</h3>
-                            <FileUpload onFileSelect={handleFileSelect} />
                         </div>
                     </div>
                 </div>

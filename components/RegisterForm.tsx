@@ -39,10 +39,10 @@ function RegisterForm() {
             if (error) {
                 throw error;
             }
-            alert("Sukses register!")
+            alert("Registrasi akun sukses!")
             router.push("/")
         } catch (error: any) {
-            console.error('Register error:', error.message);
+            alert('Registrasi gagal!');
         }
     }
 

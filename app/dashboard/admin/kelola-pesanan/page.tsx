@@ -18,6 +18,7 @@ const KelolaPesanan: React.FC = () => {
   const [selectedRow, setSelectedRow] = useState<Order | null>(null);
   const [data, setData] = useState<Order[]>([]);
   const [filteredData, setFilteredData] = useState<Order[]>([]);
+  const [trigger, setTrigger] = useState(false);
 
   const handleSearch = (query: string) => {
     if (query && query.length > 0) {
@@ -51,7 +52,7 @@ const KelolaPesanan: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, [isModalOpen]);
+  }, [isModalOpen, trigger]);
 
 
   const handleUpdateClick = (row: Order) => {
@@ -73,6 +74,7 @@ const KelolaPesanan: React.FC = () => {
       if (data) {
         const updatedData = data.filter((item) => item.reservation_id !== row.reservation_id);
         setData(updatedData);
+        fetchData()
       }
       console.log(`Successfully deleted data on Supabase for reservation ID: ${row.reservation_id}`);
     } catch (error) {
@@ -124,7 +126,7 @@ const KelolaPesanan: React.FC = () => {
 
       <div className={`${isPostModalOpen ? "opacity-60" : "opacity-0 invisible"} transition duration-200 fixed left-0 top-0 z-50 h-screen w-screen bg-black`}></div>
       <div className={`${isPostModalOpen ? "" : "translate-x-[500px]"} duration-200 transition z-50 top-0 right-0 fixed`}>
-        <ReservationPostModal onClick={() => setIsPostModalOpen(false)} />
+        <ReservationPostModal onClick={() => setIsPostModalOpen(false)} setTrigger={() => setTrigger(!trigger)} />
       </div>
       {/* 
       <Footer /> */}
