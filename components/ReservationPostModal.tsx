@@ -111,8 +111,8 @@ function ReservationPostModal(props: ReservationFormProps) {
                             total_price: price,
                             booking_code: generateRandomCode(10),
                             payment_proof: {
-                                path: imgData.path,
-                                url: process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/payment_proof/" + imgData.path
+                                path: file ? imgData.path : null,
+                                url: file ? process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/payment_proof/" + imgData.path : null
                             },
                             time: time,
                             duration: duration,

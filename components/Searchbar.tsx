@@ -12,7 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   return (
     <div className="flex items-center">
-      <TextField placeholder='Search' value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); onSearch(e.target.value) }} />
+      <TextField variant={"secondary"} placeholder='Search' value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); onSearch(e.target.value) }} />
     </div >
   );
 };

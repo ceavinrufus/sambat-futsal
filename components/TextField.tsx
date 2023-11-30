@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes, ReactNode } from 'react';
 
 interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-    variant?: 'primary' | 'secondary';
+    variant?: 'primary' | 'secondary' | 'primary-outline';
     label?: string;
     leftIcon?: ReactNode;
     rightIcon?: ReactNode;
@@ -17,8 +17,6 @@ const TextField = (props: TextFieldProps) => {
         textPickerClasses += ' border-white';
     } else if (variant === 'secondary') {
         textPickerClasses += ' border-primary';
-    } else if (variant === 'secondary') {
-        textPickerClasses += ' border-secondary';
     }
 
     const handleRightIconClick = () => {

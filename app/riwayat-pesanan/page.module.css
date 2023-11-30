@@ -1,0 +1,32 @@
+/* styles/riwayat.module.css */
+.sidebar{
+    background-color: #E2E7F0;
+  }
+
+.pageContainer {
+    /* Gaya untuk halaman utama */
+  }
+  
+  .contentContainer {
+    /* Gaya untuk container konten */
+  }
+  
+  .pageTitle {
+    /* Gaya untuk judul halaman */
+  }
+  
+  .riwayatContainer {
+    /* Gaya untuk container daftar riwayat pesanan */
+  }
+  
+  .riwayatList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .riwayatItem {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }

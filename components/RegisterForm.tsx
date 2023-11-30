@@ -22,7 +22,6 @@ function RegisterForm() {
     const router = useRouter();
 
     const handleRegister = async () => {
-        console.log(birthdate)
         try {
             const { data, error } = await supabase.auth.signUp(
                 {

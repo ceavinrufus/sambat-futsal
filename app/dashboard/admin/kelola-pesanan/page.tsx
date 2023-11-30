@@ -20,13 +20,11 @@ const KelolaPesanan: React.FC = () => {
   const [filteredData, setFilteredData] = useState<Order[]>([]);
 
   const handleSearch = (query: string) => {
-    console.log(query)
     if (query && query.length > 0) {
       const filtered = data.filter((order) =>
         order.booking_code.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredData(filtered)
-      console.log(filtered)
     } else {
       setFilteredData(data);
     }

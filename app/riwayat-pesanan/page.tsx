@@ -27,13 +27,11 @@ const KelolaPesanan: React.FC = () => {
   const [filteredData, setFilteredData] = useState<Order[]>([]);
 
   const handleSearch = (query: string) => {
-    console.log(query)
     if (query && query.length > 0) {
       const filtered = data.filter((order) =>
         order.booking_code.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredData(filtered)
-      console.log(filtered)
     } else {
       setFilteredData(data);
     }
@@ -69,7 +67,6 @@ const KelolaPesanan: React.FC = () => {
               throw new Error(reservationsError.message || 'An error occurred while fetching reservations');
             }
 
-            console.log('Reservations data:', reservationsData);
 
             const modifiedData = reservationsData?.map((row: any) => {
               if (row.payment_proof && typeof row.payment_proof === 'object') {
@@ -81,7 +78,6 @@ const KelolaPesanan: React.FC = () => {
               return row;
             }) || [];
 
-            console.log('Modified data:', modifiedData);
 
             setData(modifiedData);
             setFilteredData(modifiedData);

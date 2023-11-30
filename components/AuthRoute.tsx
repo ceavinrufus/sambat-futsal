@@ -15,7 +15,6 @@ function AuthRoute(props: AuthProps) {
         const fetchSession = async () => {
             const { data, error } = await supabase.auth.getSession();
 
-            console.log(data)
             if (data.session == null) {
                 router.push("/login");
             } else {

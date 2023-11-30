@@ -34,9 +34,7 @@ const FinancialReport = () => {
 
 
     const handleSelect = (selectedOption: string) => {
-        // Handle selected option here
         setSelectedOption(selectedOption);
-        console.log('Selected:', selectedOption);
     };
 
     useEffect(() => {
@@ -99,7 +97,6 @@ const FinancialReport = () => {
                         groupedByMonth[monthKey] = 0;
                     }
                     groupedByMonth[monthKey] += item.income;
-                    console.log(Date())
                 });
 
 
